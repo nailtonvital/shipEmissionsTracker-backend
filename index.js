@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const port = process.env.PORT || 3000
 
 // Middleware para analisar o corpo da requisição como JSON
 app.use(express.json());
@@ -15,6 +14,10 @@ const emissionFactors = {
     'MDO': 3.206,
     'LNG': 2.750
 };
+
+app.get('/', (req, res) => {
+    res.send('API para calcular emissão de CO2');
+});
 
 // Rota para calcular a emissão de CO2
 app.post('/calculate-co2', (req, res) => {
@@ -38,7 +41,10 @@ app.post('/calculate-co2', (req, res) => {
     res.json({ co2Emissions: co2Emissions.toFixed(2) });
 });
 
+// Define a porta a partir da variável de ambiente PORT, ou use a porta 3000 como padrão
+const PORT = process.env.PORT || 3000;
+
 // Iniciar o servidor
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
